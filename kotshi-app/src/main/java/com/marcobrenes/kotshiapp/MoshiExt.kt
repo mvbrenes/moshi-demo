@@ -6,14 +6,9 @@
  * This application is the private property of Lowe's Companies Inc.
  * Any distribution of this software is unlawful and prohibited.
  */
-package com.example.mvbrenes.moshiresearch.models
+package com.marcobrenes.kotshiapp
 
-class Weight(
-        var value: Double,
-        var unitType: WeightType
-) {
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 
-    enum class WeightType {
-        KG, LBS
-    }
-}
+inline fun <reified M> Moshi.adapter() : JsonAdapter<M> = this.adapter(M::class.java)

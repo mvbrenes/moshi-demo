@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private val json = """
         {
+            "__typeName" : "child",
             "first_name" : "John",
             "lastName" : "Doe",
             "weight" : {
@@ -28,8 +29,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val moshi = Moshi.Builder()
+                .add(WeightAdapter())
+                .add(PersonAdapterFactory())
                 .add(DateAdapter())
-                .add(EasierRanItemAdapter())
                 .build()
         val personAdapter: JsonAdapter<Person> = moshi.adapter()
 
@@ -41,6 +43,6 @@ class MainActivity : AppCompatActivity() {
         }
         person?.sensitiveInformation = "this is sensitive"
         val result = personAdapter.toJson(person)
-        Log.d("done", "done")
+        Log.d("done", result)
     }
 }

@@ -1,5 +1,6 @@
 package com.marcobrenes.kotshiapp
 
+import com.marcobrenes.kotshiapp.model.Card
 import com.marcobrenes.kotshiapp.model.Person
 import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
@@ -56,5 +57,34 @@ class KotshiTests {
                     }
                 }
                 .readUtf8())
+    }
+
+    @Test fun listAdapterTest() {
+        val json = """
+            |[
+            |   {
+            |       "rank": "4",
+            |       "suit": "CLUBS"
+            |   },
+            |   {
+            |       "rank": "A",
+            |       "suit": "HEARTS"
+            |   }
+            |]
+        """.trimMargin()
+
+        val adapter = moshi.listAdapter<Card>()
+        val cards = adapter.fromJson(json)
+        val expected = listOf(
+                Card("4", Card.Suit.CLUBS),
+                Card("A", Card.Suit.HEARTS)
+        )
+        assertEquals(cards, expected)
+        println(Buffer().apply {
+            JsonWriter.of(this).run {
+                indent = "   "
+                adapter.toJson(this, cards)
+            }
+        }.readUtf8())
     }
 }

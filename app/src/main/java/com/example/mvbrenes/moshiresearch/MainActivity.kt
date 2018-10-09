@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         val moshi = Moshi.Builder()
                 .add(WeightAdapter())
-                .add(PersonAdapterFactory())
                 .add(DateAdapter())
                 .build()
         val personAdapter: JsonAdapter<Person> = moshi.adapter()

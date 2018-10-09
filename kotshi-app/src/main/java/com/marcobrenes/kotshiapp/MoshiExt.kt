@@ -10,5 +10,11 @@ package com.marcobrenes.kotshiapp
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 
 inline fun <reified M> Moshi.adapter() : JsonAdapter<M> = this.adapter(M::class.java)
+
+inline fun <reified M> Moshi.listAdapter(): JsonAdapter<List<M>> {
+    val type = Types.newParameterizedType(List::class.java, M::class.java)
+    return this.adapter<List<M>>(type)
+}
